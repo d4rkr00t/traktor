@@ -1,22 +1,28 @@
 #! /usr/bin/env node
 
 import meow from 'meow';
-import chalk from 'chalk';
 import traktor from './lib/';
 
 const cli = meow({
-  pkg: '../package.json',
   help: [
     'Usage',
-    '  $ traktor [input]',
+    '  $ trk <input> <options>',
+    '  $ trk --help  shows help',
     '',
     'Options',
-    '  --foo  Lorem ipsum. [Default: false]',
-    '',
-    'Examples',
-    '  $ traktor',
-    '  unicorns & rainbows',
-    '  $ traktor ponies',
-    '  ponies & rainbows'
+    '  -d --dest <lang> [Default: ru]',
+    '  -s --source <lang> [Default: auto]',
+    '  --en  Translate to English',
+    '  --ru  Translate to Russian',
+    '  --setup <yandex-api-key>  setup api key for Yandex.Translate'
   ]
 });
+
+if (!cli.input.length) {
+  console.log(cli.help);
+} else {
+  const input = cli.input || [];
+  const flags = cli.flags || {};
+
+  traktor(input, flags);
+}

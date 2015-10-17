@@ -2,7 +2,9 @@
   "name": "traktor",
   "version": "0.0.0",
   "description": "CLI for Yandex.Translate API",
-  "bin": "cli.js",
+  "bin": {
+    "trk": "cli.js"
+  },
   "main": "lib/index.js",
   "keywords": [
     "npm",
@@ -34,8 +36,9 @@
     "lint"
   ],
   "dependencies": {
-    "meow": "^3.4.2",
-    "chalk": "^1.1.1"
+    "chalk": "^1.1.1",
+    "got": "^4.2.0",
+    "meow": "^3.4.2"
   },
   "devDependencies": {
     "babel": "^5.8.23",

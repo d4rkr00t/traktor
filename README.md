@@ -14,7 +14,7 @@ CLI for Yandex.Translate API
 ## Install
 
 ```
-npm install --save traktor
+npm install -g traktor
 ```
 
 ## Usage
@@ -27,8 +27,9 @@ npm install --save traktor
 
 Package | Version | Dev
 --- |:---:|:---:
-[meow](https://www.npmjs.com/package/meow) | ^3.4.2 | ✖
 [chalk](https://www.npmjs.com/package/chalk) | ^1.1.1 | ✖
+[got](https://www.npmjs.com/package/got) | ^4.2.0 | ✖
+[meow](https://www.npmjs.com/package/meow) | ^3.4.2 | ✖
 [babel](https://www.npmjs.com/package/babel) | ^5.8.23 | ✔
 [babel-eslint](https://www.npmjs.com/package/babel-eslint) | ^4.1.3 | ✔
 [chai](https://www.npmjs.com/package/chai) | ^3.3.0 | ✔
