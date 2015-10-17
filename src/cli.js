@@ -18,11 +18,11 @@ const cli = meow({
   ]
 });
 
-if (!cli.input.length) {
+const input = cli.input || [];
+const flags = cli.flags || {};
+
+if (!input.length && !flags.setup) {
   console.log(cli.help);
 } else {
-  const input = cli.input || [];
-  const flags = cli.flags || {};
-
   traktor(input, flags);
 }

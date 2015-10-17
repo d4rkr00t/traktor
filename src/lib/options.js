@@ -40,6 +40,7 @@ export default function options(input, flags, conf) {
   return {
     text: input.join(' '),
     dest: destLng(flags, conf),
-    source: srcLng(flags)
+    source: srcLng(flags),
+    apiKey: conf.apiKey
   };
 }
