@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
-import got from 'got';
+import axios from 'axios';
 import homedir from 'homedir';
 import _ from 'lodash';
 
@@ -12,9 +12,19 @@ import Messages from './messages';
 
 import setup from './commands/setup';
 import translate from './commands/translate';
+import formatterTranslate from './formatters/translate';
 
 const messages = new Messages({ _, chalk, log: ::console.log }); // eslint-disable-line
-const imports = { fs, path, got, config, homedir, messages, _ };
+const imports = {
+  chalk,
+  fs,
+  path,
+  config,
+  homedir,
+  messages,
+  request: axios,
+  formatters: { translate: formatterTranslate }
+};
 
 /**
  * Runs traktor.
@@ -31,6 +41,4 @@ export default function run(input, flags) {
   Promise.all(commands.map(c => c.run(opts, imports, flags)))
     .then(::messages.log)
     .catch(::console.error); // eslint-disable-line
-
-  // console.log(opts, flags, conf, commands); // eslint-disable-line
 }

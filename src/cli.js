@@ -22,7 +22,7 @@ const input = cli.input || [];
 const flags = cli.flags || {};
 
 if (!input.length && !flags.setup) {
-  console.log(cli.help);
+  console.log(cli.help); // eslint-disable-line
 } else {
   traktor(input, flags);
 }

@@ -19,7 +19,7 @@ var input = cli.input || [];
 var flags = cli.flags || {};
 
 if (!input.length && !flags.setup) {
-  console.log(cli.help);
+  console.log(cli.help); // eslint-disable-line
 } else {
-  _lib2['default'](input, flags);
-}
+    _lib2['default'](input, flags);
+  }
