@@ -6,7 +6,7 @@
  *
  * @returns {String}
  */
-export default function destLng(flags, conf) {
+export function destLng(flags, conf) {
   const { en, ru, dest } = flags;
 
   if (en) return 'en';
@@ -23,7 +23,7 @@ export default function destLng(flags, conf) {
  *
  * @returns {String}
  */
-export default function srcLng(flags) {
+export function srcLng(flags) {
   return flags.source || '';
 }
 

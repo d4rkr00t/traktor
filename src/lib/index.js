@@ -1,30 +1,32 @@
 import fs from 'fs';
 import path from 'path';
+import proq from 'proq';
 import chalk from 'chalk';
 import axios from 'axios';
 import homedir from 'homedir';
-import proq from 'proq';
 import indentString from 'indent-string';
 
 import options from './options';
 import * as config from './config';
-import chooseCommands from './choose-command';
+
 import Messages from './messages';
+import chooseCommands from './choose-command';
+import normalizeFlags from './normalize-flags';
 
-import YandexTranslateApi from './api/yandex-translate';
 import YandexDictApi from './api/yandex-dict';
+import YandexTranslateApi from './api/yandex-translate';
 
+import dict from './commands/dict';
 import setup from './commands/setup';
 import translate from './commands/translate';
 import detectLang from './commands/detect-lang';
-import dict from './commands/dict';
 
+import formatterDict from './formatters/dict';
 import formatterTranslate from './formatters/translate';
 import formatterDetectedLang from './formatters/detected-lang';
-import formatterDict from './formatters/dict';
 
-const yandexTranslateApi = new YandexTranslateApi({ request: axios });
 const yandexDictApi = new YandexDictApi({ request: axios });
+const yandexTranslateApi = new YandexTranslateApi({ request: axios });
 
 const enabledCommands = [setup, detectLang, translate, dict];
 const messages = new Messages({ chalk, log: ::console.log }); // eslint-disable-line
@@ -36,13 +38,13 @@ const imports = {
   homedir,
   messages,
   indentString,
-  yandexTranslateApi,
   yandexDictApi,
+  yandexTranslateApi,
   request: axios,
   formatters: {
+    dict: formatterDict,
     translate: formatterTranslate,
-    detectedLang: formatterDetectedLang,
-    dict: formatterDict
+    detectedLang: formatterDetectedLang
   }
 };
 
@@ -53,6 +55,7 @@ const imports = {
  * @param {Object} flags
  */
 export default function run(input, flags) {
+  flags = normalizeFlags(flags);
   config
     .read(imports)
     .then(conf => options(input, flags, conf, imports))
