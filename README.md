@@ -36,4 +36,4 @@ Stanislav Sysoev <d4rkr00t@gmail.com> http://test.com
 
 ## Contributing
 
-Contributing are highly welcome!
+Contributing are highly welcome! This repos is commitizen friendly — please read about it [here](http://commitizen.github.io/cz-cli/).

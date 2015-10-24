@@ -1,7 +1,7 @@
 {
   "name": "traktor",
-  "version": "1.0.0",
-  "description": "CLI for Yandex.Translate API",
+  "version": "0.0.0-semantically-released",
+  "description": "CLI for Yandex.Translate API + Yandex.Dictionary API",
   "bin": {
     "trk": "cli.js"
   },
@@ -13,7 +13,10 @@
     "bootstrap"
   ],
   "license": "MIT",
-  "repository": "d4rkr00t/traktor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d4rkr00t/traktor"
+  },
   "scripts": {
     "audit": "nsp package",
     "build": "babel -d ./ ./src",
@@ -21,6 +24,7 @@
     "cov": "babel-node ./node_modules/.bin/isparta cover --report lcovonly --report html _mocha -- test/*.test.js -r test/setup.js",
     "coveralls": "npm run cov && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "lint": "eslint src test",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "test": "mocha test/*.test.js -r babel/register -r test/setup.js",
     "validate": "npm run lint && npm test",
     "prepare": "npm run validate && npm run check && npm run build",
@@ -54,7 +58,8 @@
     "mocha": "^2.3.3",
     "mocha-lcov-reporter": "1.0.0",
     "nsp": "^1.1.0",
-    "pre-commit": "^1.1.1"
+    "pre-commit": "^1.1.1",
+    "semantic-release": "^4.3.5"
   },
   "czConfig": {
     "path": "./node_modules/cz-conventional-changelog"
