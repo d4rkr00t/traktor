@@ -28,7 +28,7 @@ trk --help
 
 ## Author
 
-Stanislav Sysoev <d4rkr00t@gmail.com> http://test.com
+Stanislav Sysoev <d4rkr00t@gmail.com> https://github.com/d4rkr00t
 
 ## License
 
