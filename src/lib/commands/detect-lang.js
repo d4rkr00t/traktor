@@ -1,17 +1,22 @@
 export default {
-  name: 'translate',
-  pos: 10,
+  name: 'detect-lang',
+  pos: 0,
 
   run({ opts, imports }) {
-    const { text, dest, source, yt_key: key } = opts;
+    const { text, yt_key: key } = opts;
     const {
       yandexTranslateApi,
-      formatters: { translate }
+      formatters: { detectedLang }
     } = imports;
 
     return yandexTranslateApi
-      .translate(key, text, dest, source)
-      .then(data => translate(data, opts, imports));
+      .detect(key, text)
+      .then(lang => {
+        detectedLang(lang, opts, imports);
+
+        return lang;
+      })
+      .then(lang => opts.source = lang || '');
   },
 
   check(flags, opts) {

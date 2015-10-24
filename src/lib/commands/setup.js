@@ -2,32 +2,30 @@ export default {
   name: 'setup',
   pos: 0,
 
-  run(opts, imports, flags) {
+  run({ opts, imports }) {
     const { messages, config } = imports;
-    const { setup } = flags;
 
-    if (!opts.apiKey && (typeof setup !== 'string' || (setup === 'key' && !opts.text))) {
-      return Promise.resolve(messages.setupNeeded());
+    if (!opts.yt_key) {
+      messages.setupRequired();
+      messages.setupHelp();
+      config.bootstrap(imports);
+      return;
     }
 
-    if (setup === 'key' && opts.apiKey === opts.text) {
-      config.write({ apiKey: opts.text }, imports);
-
-      return Promise.resolve(messages.setupKeyAlreadyExists());
-    } else if (setup === 'key' && opts.apiKey !== opts.text && opts.text) {
-      config.write({ apiKey: opts.text }, imports);
-
-      return Promise.resolve(messages.setupKeyCompleted());
+    if (!opts.yd_key) {
+      messages.setupOptional();
+      messages.setupHelp();
+      return;
     }
 
-    if (setup && !opts.text) {
-      return Promise.resolve(messages.setupHelp());
+    if (opts.yt_key && opts.yd_key) {
+      return messages.setupCompleted();
     }
 
     return Promise.resolve();
   },
 
-  check(flags) {
-    return flags.setup;
+  check(flags, opts) {
+    return flags.setup || !opts.yt_key;
   }
 };

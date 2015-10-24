@@ -3,18 +3,31 @@ import path from 'path';
 import chalk from 'chalk';
 import axios from 'axios';
 import homedir from 'homedir';
-import _ from 'lodash';
+import proq from 'proq';
+import indentString from 'indent-string';
 
 import options from './options';
 import * as config from './config';
 import chooseCommands from './choose-command';
 import Messages from './messages';
 
+import YandexTranslateApi from './api/yandex-translate';
+import YandexDictApi from './api/yandex-dict';
+
 import setup from './commands/setup';
 import translate from './commands/translate';
-import formatterTranslate from './formatters/translate';
+import detectLang from './commands/detect-lang';
+import dict from './commands/dict';
 
-const messages = new Messages({ _, chalk, log: ::console.log }); // eslint-disable-line
+import formatterTranslate from './formatters/translate';
+import formatterDetectedLang from './formatters/detected-lang';
+import formatterDict from './formatters/dict';
+
+const yandexTranslateApi = new YandexTranslateApi({ request: axios });
+const yandexDictApi = new YandexDictApi({ request: axios });
+
+const enabledCommands = [setup, detectLang, translate, dict];
+const messages = new Messages({ chalk, log: ::console.log }); // eslint-disable-line
 const imports = {
   chalk,
   fs,
@@ -22,8 +35,15 @@ const imports = {
   config,
   homedir,
   messages,
+  indentString,
+  yandexTranslateApi,
+  yandexDictApi,
   request: axios,
-  formatters: { translate: formatterTranslate }
+  formatters: {
+    translate: formatterTranslate,
+    detectedLang: formatterDetectedLang,
+    dict: formatterDict
+  }
 };
 
 /**
@@ -33,12 +53,10 @@ const imports = {
  * @param {Object} flags
  */
 export default function run(input, flags) {
-  const conf = config.read(imports);
-  const opts = options(input, flags, conf);
-
-  const commands = chooseCommands(flags, opts, [setup, translate]);
-
-  Promise.all(commands.map(c => c.run(opts, imports, flags)))
-    .then(::messages.log)
-    .catch(::console.error); // eslint-disable-line
+  config
+    .read(imports)
+    .then(conf => options(input, flags, conf, imports))
+    .then(opts => { return { opts, commands: chooseCommands(flags, opts, enabledCommands) }; })
+    .then(({ opts, commands }) => proq(commands.map(c => c.run.bind(null, { opts, imports, flags }))))
+    .catch(err => console.error(err.stack || err)); // eslint-disable-line
 }

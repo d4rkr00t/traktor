@@ -34,13 +34,16 @@ export default function srcLng(flags) {
  * @param {Object} flags
  * @param {Object} conf
  *
- * @returns {Object}
+ * @returns {Promise}
  */
 export default function options(input, flags, conf) {
   return {
     text: input.join(' '),
+
     dest: destLng(flags, conf),
     source: srcLng(flags),
-    apiKey: conf.apiKey
+
+    yt_key: conf.yt_key,
+    yd_key: conf.yd_key
   };
 }

@@ -1,4 +1,8 @@
 const CFG_NAME = '.traktor.json';
+const CONFIG_BOOTSTRAP = {
+  yt_key: '',
+  yd_key: ''
+};
 
 export function getCfgPath(imports) {
   const { homedir, path } = imports;
@@ -11,19 +15,22 @@ export function getCfgPath(imports) {
  *
  * @param {Object} imports
  *
- * @returns {Object}
+ * @returns {Promise}
  */
 export function read(imports) {
   const { fs } = imports;
   const cfgPath = getCfgPath(imports);
 
-  try {
-    fs.accessSync(cfgPath);
+  return new Promise(resolve => {
+    fs.access(cfgPath, err => {
+      if (err) {
+        resolve({});
+        return;
+      }
 
-    return require(cfgPath);
-  } catch (e) {
-    return {};
-  }
+      resolve(require(cfgPath));
+    });
+  });
 }
 
 export function write(opts, imports) {
@@ -33,4 +40,11 @@ export function write(opts, imports) {
   const cfgPath = getCfgPath(imports);
 
   fs.writeFileSync(cfgPath, JSON.stringify(updatedConfig, ' ', 2));
+}
+
+export function bootstrap(imports) {
+  const { fs } = imports;
+  const cfgPath = getCfgPath(imports);
+
+  fs.writeFileSync(cfgPath, JSON.stringify(CONFIG_BOOTSTRAP, ' ', 2));
 }

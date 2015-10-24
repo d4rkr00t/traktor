@@ -1,4 +1,4 @@
-import traktor from '../lib/';
+// import traktor from '../lib/';
 
 describe('traktor', () => {
 

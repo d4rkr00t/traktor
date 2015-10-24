@@ -8,6 +8,7 @@ const cli = meow({
     'Usage',
     '  $ trk <input> <options>',
     '  $ trk --help  shows help',
+    '  $ trk --setup shows configuration information',
     '',
     'Options',
     '  -d --dest <lang> [Default: ru]',
