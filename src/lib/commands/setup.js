@@ -2,6 +2,11 @@ export default {
   name: 'setup',
   pos: 0,
 
+  /**
+   * Runs setup command.
+   *
+   * @returns {Promise}
+   */
   run({ opts, imports }) {
     const { messages, config } = imports;
 
@@ -25,6 +30,14 @@ export default {
     return Promise.resolve();
   },
 
+  /**
+   * Check if command should be called.
+   *
+   * @param {Object} flags
+   * @param {Object} opts
+   *
+   * @returns {Boolean}
+   */
   check(flags, opts) {
     return flags.setup || !opts.yt_key;
   }

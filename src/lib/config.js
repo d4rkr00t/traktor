@@ -40,6 +40,14 @@ export function read(imports) {
   });
 }
 
+/**
+ * Writes options to config.
+ *
+ * @param {Object} opts
+ * @param {Object} imports
+ *
+ * @returns {Promise}
+ */
 export function write(opts, imports) {
   const { fs } = imports;
 
@@ -52,6 +60,13 @@ export function write(opts, imports) {
     });
 }
 
+/**
+ * Bootstraps config with required fields.
+ *
+ * @param {Object} imports
+ *
+ * @returns {undefined}
+ */
 export function bootstrap(imports) {
   const { fs } = imports;
   const cfgPath = getCfgPath(imports);
