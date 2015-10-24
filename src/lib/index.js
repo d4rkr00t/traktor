@@ -35,6 +35,7 @@ const imports = {
   fs,
   path,
   config,
+  require,
   homedir,
   messages,
   indentString,

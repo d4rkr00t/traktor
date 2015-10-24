@@ -4,6 +4,13 @@ const CONFIG_BOOTSTRAP = {
   yd_key: ''
 };
 
+/**
+ * Returns path to tarktor config.
+ *
+ * @param {Object} imports
+ *
+ * @returns {String}
+ */
 export function getCfgPath(imports) {
   const { homedir, path } = imports;
 
@@ -18,7 +25,7 @@ export function getCfgPath(imports) {
  * @returns {Promise}
  */
 export function read(imports) {
-  const { fs } = imports;
+  const { fs, require } = imports;
   const cfgPath = getCfgPath(imports);
 
   return new Promise(resolve => {
@@ -35,16 +42,19 @@ export function read(imports) {
 
 export function write(opts, imports) {
   const { fs } = imports;
-  const config = read(imports);
-  const updatedConfig = Object.assign(config, opts);
-  const cfgPath = getCfgPath(imports);
 
-  fs.writeFileSync(cfgPath, JSON.stringify(updatedConfig, ' ', 2));
+  return read(imports)
+    .then(config => {
+      const updatedConfig = Object.assign(config, opts);
+      const cfgPath = getCfgPath(imports);
+
+      return fs.writeFileSync(cfgPath, JSON.stringify(updatedConfig, ' ', 2));
+    });
 }
 
 export function bootstrap(imports) {
   const { fs } = imports;
   const cfgPath = getCfgPath(imports);
 
-  fs.writeFileSync(cfgPath, JSON.stringify(CONFIG_BOOTSTRAP, ' ', 2));
+  return fs.writeFileSync(cfgPath, JSON.stringify(CONFIG_BOOTSTRAP, ' ', 2));
 }
