@@ -1,5 +1,14 @@
 import { get, compact, pluck, isEmpty } from 'lodash';
 
+/**
+ * Message formatter for yandex dictionary lookup results.
+ *
+ * @param {Object} data - api response data
+ * @param {Object} opts
+ * @param {Object} imports
+ *
+ * @returns {undefined}
+ */
 export default function dictFormatter(data, opts, imports) {
   const { chalk, messages, indentString } = imports;
   const indent = (str, count) => indentString(str, ' ', count ? count + 9 : 9);
@@ -17,6 +26,15 @@ export default function dictFormatter(data, opts, imports) {
  *
  */
 
+/**
+ * Formatter for transcription.
+ *
+ * @param {Object} chalk
+ * @param {Function} indent
+ * @param {Object} data
+ *
+ * @returns {String|undefined}
+ */
 export function transcription(chalk, indent, data) {
   const ts = get(data, '0.ts');
 
@@ -25,6 +43,15 @@ export function transcription(chalk, indent, data) {
   return indent(chalk.grey(`[${ts}]`));
 }
 
+/**
+ * Formatter for parts of speach.
+ *
+ * @param {Object} chalk
+ * @param {Function} indent
+ * @param {Object} data
+ *
+ * @returns {String|undefined}
+ */
 export function partsOfSpeach(chalk, indent, data) {
   return compact(data.map(part => {
     const title = indent(chalk.green(part.pos));
@@ -40,10 +67,29 @@ export function partsOfSpeach(chalk, indent, data) {
  *
  */
 
+ /**
+  * Formatter for text + gender data.
+  *
+  * @param {Object} chalk
+  * @param {String} text
+  * @param {String} gen
+  *
+  * @returns {String}
+  */
 export function formatTextAndGender(chalk, text, gen) {
   return text + chalk.grey(gen ? ` ${gen}` : '');
 }
 
+/**
+ * Formatter for trs titles.
+ *
+ * @param {Object} chalk
+ * @param {Function} indent
+ * @param {Object[]} tr
+ * @param {Number} index
+ *
+ * @returns {String}
+ */
 export function formatTrsTitles(chalk, indent, tr, index) {
   const title = [];
 
@@ -58,6 +104,15 @@ export function formatTrsTitles(chalk, indent, tr, index) {
   return indent(index + title.join(', '), 3);
 }
 
+/**
+ * Formatter for parts of speach.
+ *
+ * @param {Object} chalk
+ * @param {Function} indent
+ * @param {Object[]} tr
+ *
+ * @returns {String|undefined}
+ */
 export function formatTrsMean(chalk, indent, tr) {
   const mean = pluck(tr.mean, 'text');
 
@@ -66,6 +121,16 @@ export function formatTrsMean(chalk, indent, tr) {
   return indent(chalk.dim.yellow('(' + mean.join(', ') + ')'), 6);
 }
 
+/**
+ * Formatter for 'tr' field in dictionary api response.
+ *
+ * @param {Object} chalk
+ * @param {Function} indent
+ * @param {Object[]} tr
+ * @param {Number} index
+ *
+ * @returns {String}
+ */
 export function formatTrs(chalk, indent, tr, index) {
   const title = formatTrsTitles(chalk, indent, tr, index);
   const mean = formatTrsMean(chalk, indent, tr);
