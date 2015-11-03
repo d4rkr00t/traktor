@@ -15,7 +15,7 @@ const cli = meow({
     '  -s --source <lang> [Default: auto]',
     '  --en  Translate to English',
     '  --ru  Translate to Russian',
-    '  --setup <yandex-api-key>  setup api key for Yandex.Translate'
+    '  --setup Setup help for traktor'
   ]
 });
 
