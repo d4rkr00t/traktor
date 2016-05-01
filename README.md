@@ -6,6 +6,7 @@
 [![travis-status](https://img.shields.io/travis/d4rkr00t/traktor.svg)](https://travis-ci.org/d4rkr00t/traktor)
 [![coveralls](https://img.shields.io/coveralls/d4rkr00t/traktor.svg)](https://coveralls.io/github/d4rkr00t/traktor)
 [![commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+![no maintained](https://img.shields.io/maintenance/no/2016.svg)
 
 CLI for Yandex.Translator API + Yandex.Dictionary API.
 
