@@ -44,7 +44,7 @@
     "homedir": "^0.6.0",
     "indent-string": "^2.1.0",
     "lodash": "^3.10.1",
-    "meow": "^3.4.2",
+    "meow": "^3.7.0",
     "proq": "^1.0.0"
   },
   "devDependencies": {
